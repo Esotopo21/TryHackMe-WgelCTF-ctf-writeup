@@ -1,5 +1,7 @@
 # TryHackMe-WgelCTF-ctf-writeup
 
+CTF url: https://www.tryhackme.com/room/wgelctf
+
 I will use $MY_IP as placeholder for the IP assigned to my machine in the thm VPN, and $MACHINE_IP as placeholder for the "victim host".
 
 I start with default nmap (ran as root, so it would be a syn scan)
@@ -10,11 +12,11 @@ wich reveals me two open ports: 22 (ssh) and 80 (apache).
 
 Browsing $MACHINE_IP I see the classic welcome page. I will launch gobuster 
 
-`gobuster dir -x php -u $MACHINE_IP -w /usr/share/dirb/wordlists/common.txt`
+`gobuster dir -x php,html -u $MACHINE_IP -w /usr/share/dirb/wordlists/common.txt`
 
 I see some usual stuff along with "sitemap" folder. I browse it, it is some sort of blog, while looking trough its pages I will launch gobuster again starting from this path
 
-`gobuster dir -x php -u $MACHINE_IP/sitemap -w /usr/share/dirb/wordlists/common.txt`
+`gobuster dir -x php,html -u $MACHINE_IP/sitemap -w /usr/share/dirb/wordlists/common.txt`
 
 Around pages I don't see nothing useful but a form meant to "leave comments" wich seems not to be injectable.
 
@@ -34,7 +36,7 @@ Finally, after looking at every pages source code, I find the username "jessie" 
 
 I'm in and I find the first flag under /home/jessie/Documents.
 
-Next step is to retrieve's "user flag" which I suppose is in /root. 
+Next step is to retrieve "user flag" which I suppose is in /root. 
 
 I check jessie's sudo permissions:
 
